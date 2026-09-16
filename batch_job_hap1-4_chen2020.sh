@@ -1,0 +1,48 @@
+#!/bin/bash
+#SBATCH --partition=amilan
+#SBATCH --qos=normal
+#SBATCH --job-name=chen2020_hap1-4
+#SBATCH --output=logs/chen2020_hap1-4.%j.out
+#SBATCH --time=002:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=16
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=wist9668@colorado.edu
+
+module purge
+module load miniforge
+mamba activate hap1
+
+cd /projects/wist9668/HAP1_Synthetic_Lethality_pipeline
+
+# ── Job-specific settings ────────────────────────────────────────────────────
+SCREEN_NAME=chen2020_hap1-4
+GENE_REF=/scratch/alpine/wist9668/reference/annotation/chen2020/chen2020_intron_CM-mapped.bed
+REF_ID=chen2020
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Clean up previous runs
+rm -rf /scratch/alpine/wist9668/tmp/${SCREEN_NAME}_output/
+rm -rf /scratch/alpine/wist9668/data/analyzed_data/synthetic_lethal_screens/${SCREEN_NAME}_output/
+
+# Array of input files mapped to replicate numbers
+FILES=(
+    "/pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047158.fastq.gz"
+    "/pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047159.fastq.gz"
+    "/pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047160.fastq.gz"
+    "/pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047161.fastq.gz"
+)
+
+# Run each replicate
+for REP in {1..4}; do
+    echo "==============================================="
+    echo "Starting replicate ${REP} at $(date)"
+    echo "==============================================="
+
+    ./analyze_sli.sh -C -R=${REP} -S=${FILES[$((REP-1))]} --name=${SCREEN_NAME} --gene-ref=${GENE_REF} --ref-id=${REF_ID}
+
+    echo "Completed replicate ${REP} at $(date)"
+    echo ""
+done
+
+echo "All replicates completed at $(date)"
