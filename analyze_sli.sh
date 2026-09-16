@@ -53,6 +53,14 @@ case $i in
 	    cc="yes"
 	    shift
 	;;
+	--gene-ref=*)  # Override gene_ref from settings file
+	    ARG_GENE_REF="${i#*=}"
+	    shift
+	;;
+	--ref-id=*)    # Override ref_id from settings file
+	    ARG_REF_ID="${i#*=}"
+	    shift
+	;;
 	-h|-?|--help)
         HELP="yes"
         shift
@@ -73,8 +81,8 @@ fi
 ###########################################################
 bowtie=$(awk -F '\t' '$1 ~ /location_bowtie/ {print $2}' alignment_settings.conf)
 ref_genome=$(awk -F '\t' '$1 ~ /ref_genome/ {print $2}' alignment_settings.conf)
-gene_ref=$(awk -F '\t' '$1 ~ /gene_ref/ {print $2}' alignment_settings.conf)
-ref_id=$(awk -F '\t' '$1 ~ /ref_id/ {print $2}' alignment_settings.conf)
+gene_ref=${ARG_GENE_REF:-$(awk -F '\t' '$1 ~ /gene_ref/ {print $2}' alignment_settings.conf)}
+ref_id=${ARG_REF_ID:-$(awk -F '\t' '$1 ~ /ref_id/ {print $2}' alignment_settings.conf)}
 trim_reads=$(awk -F '\t' '$1 ~ /trim_reads/ {print $2}' alignment_settings.conf)
 if [[ $trim_reads == "yes" ]]
 	then
@@ -177,7 +185,7 @@ if [ -f $bowtie ]; then printf "$ff" | tee -a $OUT/genome_align_log.txt; else pr
 
 # Check number of allowed mismatches and write to log
 printf "\tChecking number of mismatches:..." | tee -a $OUT/genome_align_log.txt
-if [[ $mismatch_num>=0 && $mismatch_num<4 ]]; then printf "($mismatch_num) OK " | tee -a $OUT/genome_align_log.txt; else printf "($mismatch_num) $mme" && printf "$tl"; exit; fi
+if [[ $mismatch_num -ge 0 && $mismatch_num -le 3 ]]; then printf "($mismatch_num) OK " | tee -a $OUT/genome_align_log.txt; else printf "($mismatch_num) $mme" && printf "$tl"; exit; fi
 printf "\n\t-----------------------
 Everyting seems fine\n\n"
 
