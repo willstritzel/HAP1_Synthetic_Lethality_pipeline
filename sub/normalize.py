@@ -70,7 +70,7 @@ def normalize_to_median(raw, reference):
             df[['norm_sense', 'norm_antisense']] = df[['norm_sense', 'norm_antisense']].astype(np.int32)
             df = df[['gene', 'norm_sense', 'norm_antisense']]
             df.columns = subset
-            ns = ns.append(df)  # Append to DataFrame with normalized counts of previous group
+            ns = pd.concat([ns, df], ignore_index=True)  # Append to DataFrame with normalized counts of previous group
 
     else:
         # If cauchy_compatibility==True, grouping of genes will be performed according to the previous version of
@@ -86,7 +86,7 @@ def normalize_to_median(raw, reference):
             for gi in range(0, grouping):  # Append the genes to the current group
                 i = gi + g * grouping  # DataFrame Index
                 if i <= genes:  # For the last group
-                    df = df.append(sn[i:i + 1])
+                    df = pd.concat([df, sn[i:i + 1]], ignore_index=True)
             ref_median = df['ref_ratio'].median()
             sample_median = df['ratio'].median()
             df = df.assign(norm_sense=np.where(df['ratio'] <= sample_median
@@ -104,11 +104,11 @@ def normalize_to_median(raw, reference):
             df = df.assign(norm_antisense=(df[subset[1]] + df[subset[2]] - df['norm_sense']))
             df = df[['gene', 'norm_sense', 'norm_antisense']]
             df.columns = subset
-            ns = ns.append(df)  # Append to DataFrame with normalized counts of previous group
+            ns = pd.concat([ns, df], ignore_index=True)  # Append to DataFrame with normalized counts of previous group
 
     # Merge the normalized sample with the datapoint of the sample that could not be normalized because of absense
     # of these genes in the reference
-    ns = ns.append(scn[subset])
+    ns = pd.concat([ns, scn[subset]], ignore_index=True)
     normalized_data = pd.merge(ns, normalized_data, on='gene', how='outer')
     normalized_data[['sense', 'antisense']] = normalized_data[['sense', 'antisense']].astype(np.int32)
 

@@ -41,11 +41,12 @@ def binomtest(datadir):
 
     print("done\nPerforming Binomial tests...", end='')
     # Sum sense and antisense integration to get n-trials or binom test
-    combined['p'] = combined[['sense', 'antisense']].apply(scipy.stats.binom_test, axis=1,
-                                                           raw=True)  # Sense is considered as a success, this is a two-sided test see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom_test.html
+    combined['p'] = combined.apply(lambda row: scipy.stats.binomtest(int(row['sense']), int(row['sense'] + row['antisense']), 0.5, alternative='two-sided').pvalue if (row['sense'] + row['antisense']) > 0 else 1.0, axis=1)
     print("done\nApplying Multiple Testing correction using Benjamini Hochberg method...", end='')
-    combined['fdr'] = \
-    statsmodels.sandbox.stats.multicomp.multipletests(combined.p, alpha=0.05, method='fdr_bh', returnsorted=False)[1]
+    if len(combined) > 0:
+        combined['fdr'] = statsmodels.sandbox.stats.multicomp.multipletests(combined.p, alpha=0.05, method='fdr_bh', returnsorted=False)[1]
+    else:
+        combined['fdr'] = []
     print("done")
     return (combined)
 
