@@ -1,4 +1,31 @@
-# Exlude these files and dirs
+# Git internals (upstream entry, kept)
 .git/
-.idea/ # Pycharm stuff
 
+# IDE / tooling state
+.idea/
+.claude/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Slurm logs and job output
+logs/
+*.out
+
+# Figures and rendered documents produced by the analysis scripts
+*.pdf
+
+# Shell-redirect accident
+&1
+
+# Data must never enter the repo: it lives on /scratch/alpine and /pl/active/ShenLab_PL
+*.fastq
+*.fastq.gz
+*.fa
+*.bwt
+*.bed
+*.bam
+*.sam
+*.csv
+*.tsv
+*.xlsx
