@@ -4,7 +4,7 @@
 #SBATCH --qos=cpu-normal
 #SBATCH --job-name=JOBNAME
 #SBATCH --output=logs/JOBNAME.%j.out
-#SBATCH --time=12:00:00
+#SBATCH --time=04:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --mail-type=ALL
