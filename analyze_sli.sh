@@ -278,7 +278,7 @@ for ((i=$mismatch_num;i>-1;i-=1)); do   # Loop in reverse order over number of m
 	bwtsuppressedfile=$OUT/$rep.suppressed_mm$i.bwt
 
 	printf "\n-------------------------------\nAlligning with $i mismatches\n-------------------------------\nIntermediate bowtie-statistics\n"
-	$bowtie -p 30 --best -v $i -m 1 -f $ref_genome $bwtinfile $bwtoutfile --max $bwtsuppressedfile
+	$bowtie -p $core_num --best -v $i -m 1 -f $ref_genome $bwtinfile $bwtoutfile --max $bwtsuppressedfile
 	# The output file looks like (it does not have a header)
         # 469     -       chr22   30347844        GTTGCTGGTTCAAGTGATTTATTACAAGTAAAGGTTTTTTTTTTTTTTTT      IIIIIIIIIIIIIIIIIIII$
         # 462     -       chr5    54795872        ATCATATATGGTATAATTTGATTTCTCTAAAAATTTTTTTTTTTTTTTTT      IIIIIIIIIIIIIIIIIIII$
