@@ -4,7 +4,7 @@
 #SBATCH --qos=cpu-normal
 #SBATCH --job-name=js-hap1-PrP-lncRNA
 #SBATCH --output=logs/js-hap1-PrP-lncRNA.%j.out
-#SBATCH --time=04:00:00
+#SBATCH --time=06:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --mail-type=ALL

@@ -5,7 +5,7 @@
 #SBATCH --job-name=grch38_hap1-4_arr
 #SBATCH --output=logs/grch38_hap1-4_arr.%A_%a.out
 #SBATCH --array=1-4
-#SBATCH --time=01:30:00
+#SBATCH --time=02:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --mail-type=END,FAIL
@@ -19,9 +19,9 @@
 # (~40 min) instead of ~2 h 30, at the cost of 64 CPUs and four
 # concurrent reads off the shared lab PetaLibrary.
 #
-# Walltime: the slowest replicate measured was 42m35s and the observed
-# per-replicate spread on identical inputs is 15-43 min, so 1h30 is
-# ~2.1x the worst case.
+# Walltime: the slowest replicate measured was 50m37s and the observed
+# per-replicate spread on identical inputs is 15-51 min, so 2 h is
+# ~2.4x the worst case.
 #
 # DO NOT submit this directly - it deliberately has no cleanup step,
 # because a per-task `rm -rf` of the screen directory would delete the

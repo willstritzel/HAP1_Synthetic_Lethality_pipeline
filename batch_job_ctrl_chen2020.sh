@@ -4,7 +4,7 @@
 #SBATCH --qos=cpu-normal
 #SBATCH --job-name=js-ctrl-chen2020
 #SBATCH --output=logs/js-ctrl-chen2020.%j.out
-#SBATCH --time=04:00:00
+#SBATCH --time=06:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --mail-type=ALL

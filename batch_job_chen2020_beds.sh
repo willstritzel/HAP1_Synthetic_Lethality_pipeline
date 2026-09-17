@@ -4,7 +4,7 @@
 #SBATCH --qos=cpu-normal
 #SBATCH --job-name=chen2020-beds
 #SBATCH --output=logs/chen2020-beds.%j.out
-#SBATCH --time=04:00:00
+#SBATCH --time=06:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=4
 #SBATCH --mail-type=ALL
