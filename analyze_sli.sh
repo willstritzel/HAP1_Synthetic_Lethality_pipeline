@@ -126,8 +126,8 @@ if [[ ($SCREENNAME == '' || $REPLICATE == "" || $SEQFILE == "") && $HELP != "yes
     printf "$ws" && exit
 elif [[ " (1 2 3 4[@]) " =~ $REPLICATE ]]; then # If so, check if given replicate number is a valid number (ie. 1, 2, 3 or 4)
     printf "\tChecking screenname $SCREENNAME..."
-    if [[ -d $tmp_dir$SCREENNAME"_output" ]]; then
-        printf "ERROR\n\n --> Directory for $SCREENNAME already present in temp directory <--\nPlease check the log files why it's there\nQuiting now\n\n." && exit
+    if [[ -d $tmp_dir$SCREENNAME"_output/replicate_"$REPLICATE ]]; then
+        printf "ERROR\n\n --> Working directory for $SCREENNAME replicate $REPLICATE already present in temp directory <--\nPlease check the log files why it's there\nQuiting now\n\n." && exit
     elif [[ -d $final_dir$SCREENNAME"_output" ]]; then
         SP=1
         printf "found in final dir\n\tChecking replicates..."
@@ -377,8 +377,6 @@ printf "\nTotal runtime hh:mm:ss: " | tee -a $OUT/genome_align_log.txt
 runtime=$(python3 -c "import datetime; print(str(datetime.timedelta(seconds=(${endtime} - ${starttime}))))")
 printf $runtime"\n" | tee -a $OUT/genome_align_log.txt
 
-if [[ $SP == 0 ]]; then
-    mkdir $final_dir$SCREENNAME"_output/"
-fi
+mkdir -p $final_dir$SCREENNAME"_output/"
 mv $OUT $final_dir$SCREENNAME"_output/"
-rm -r $tmp_dir$SCREENNAME"_output"
+rmdir --ignore-fail-on-non-empty $tmp_dir$SCREENNAME"_output"
