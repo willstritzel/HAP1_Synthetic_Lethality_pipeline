@@ -2,7 +2,7 @@
 #SBATCH --account=ucb-general
 #SBATCH --partition=acpu
 #SBATCH --qos=cpu-normal
-#SBATCH --time=02:00:00
+#SBATCH --time=00:30:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --mail-type=END,FAIL
@@ -38,7 +38,7 @@
 
 # >>> CONFIG ---------------------------------------------------------
 # SCREEN_NAME  <annotation>_<reads>; output lands in <SCREEN_NAME>_output
-SCREEN_NAME=GRCh38_hap1-4
+SCREEN_NAME=smoke_template
 
 # GENE_REF     BED6 feature file. Chromosome names must match the bowtie
 #              index (GenBank CM accessions) or it intersects nothing.
@@ -50,10 +50,7 @@ REF_ID=GRCh38-NCBI_RefSeq
 # FILES        one FASTQ per replicate, in replicate order. The array is
 #              sized to this list, so add or remove entries freely.
 FILES=(
-    /pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047158.fastq.gz
-    /pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047159.fastq.gz
-    /pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047160.fastq.gz
-    /pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047161.fastq.gz
+    /pl/active/ShenLab_PL/haploid_genetics/raw_reads/hap1-4/SRR2047161_subset.fastq.gz
 )
 # <<< CONFIG ---------------------------------------------------------
 
