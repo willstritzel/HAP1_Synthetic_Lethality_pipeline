@@ -1,6 +1,7 @@
 #!/bin/bash
-#SBATCH --partition=amilan
-#SBATCH --qos=normal
+#SBATCH --account=ucb-general
+#SBATCH --partition=acpu
+#SBATCH --qos=cpu-normal
 #SBATCH --job-name=tiled_strand_bias
 #SBATCH --output=logs/tiled_strand_bias.%j.out
 #SBATCH --time=006:00:00
@@ -38,8 +39,8 @@ set -euo pipefail
 
 # ── Defaults ─────────────────────────────────────────────────────────────────
 SCREEN_NAME="hap1-4_tiled"
-REP_DIR="/scratch/alpine/wist9668/data/analyzed_data/synthetic_lethal_screens/tiled_2kb_hap1-4_output"
-FINAL_DIR="/scratch/alpine/wist9668/data/analyzed_data/synthetic_lethal_screens"
+REP_DIR="/scratch/alpine/wist9668/haploid_scratch/screens/tiled_2kb_hap1-4_output"
+FINAL_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
 WINDOW_SIZE=10000
 STEP_SIZE=1000
 MIN_INSERTIONS=10
@@ -89,7 +90,7 @@ echo " Merge gap:   ${MERGE_GAP} bp"
 echo " Started:     $(date)"
 echo "========================================================"
 
-ml miniforge
+source /curc/sw/anaconda3/2023.09/etc/profile.d/conda.sh
 
 # ── Step 1: Aggregate and de-duplicate insertions ─────────────────────────────
 echo ""

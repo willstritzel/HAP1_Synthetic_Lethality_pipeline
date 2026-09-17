@@ -1,6 +1,7 @@
 #!/bin/bash
-#SBATCH --partition=amilan
-#SBATCH --qos=normal
+#SBATCH --account=ucb-general
+#SBATCH --partition=acpu
+#SBATCH --qos=cpu-normal
 #SBATCH --job-name=js-hap1-CD59
 #SBATCH --output=logs/js-hap1-CD59.%j.out
 #SBATCH --time=002:00:00
@@ -9,14 +10,13 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=wist9668@colorado.edu
 
-module purge
-module load miniforge
-mamba activate hap1
+source /curc/sw/anaconda3/2023.09/etc/profile.d/conda.sh
+conda activate hap1
 
 cd /projects/wist9668/HAP1_Synthetic_Lethality_pipeline
 
 SCREEN_NAME=JS_HAP1_CD59
-GENE_REF=/scratch/alpine/wist9668/reference/annotation/GRCh38_introns_CM_mapped.bed
+GENE_REF=/scratch/alpine/wist9668/haploid_scratch/reference/annotation/GRCh38_introns_CM_mapped.bed
 REF_ID=CD59
 SEQFILE=/pl/active/ShenLab_PL/haploid_genetics/raw_reads/CD59/SRR2016930.fastq.gz
 

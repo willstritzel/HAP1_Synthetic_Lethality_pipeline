@@ -8,12 +8,14 @@
 
 set -euo pipefail
 
+source /curc/sw/anaconda3/2023.09/etc/profile.d/conda.sh
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/sub"
 
-REF_DIR="/scratch/alpine/wist9668/reference/annotation/chen2020"
+REF_DIR="/scratch/alpine/wist9668/haploid_scratch/reference/annotation/chen2020"
 EXONS_BED="${REF_DIR}/chen2020_exon_CM-mapped.bed"
 
-DATA_DIR="/scratch/alpine/wist9668/data/analyzed_data/synthetic_lethal_screens"
+DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
 PrP_DIR="${DATA_DIR}/JS_HAP1_PrP_chen2020_output/replicate_1"
 CTRL_DIR="${DATA_DIR}/JS_ControlData_chen2020_output/replicate_1"
 
@@ -38,19 +40,19 @@ for f in "${EXONS_BED}" "${PrP_BWT}" "${CTRL_BWT}" "${PrP_INTRON}" "${CTRL_INTRO
 done
 
 echo "[1/3] Counting exonic insertions for PrP screen ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
     --bwt   "${PrP_BWT}" \
     --exons "${EXONS_BED}" \
     --out   "${PrP_EXON}"
 
 echo "[1/3] Counting exonic insertions for control ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
     --bwt   "${CTRL_BWT}" \
     --exons "${EXONS_BED}" \
     --out   "${CTRL_EXON}"
 
 echo "[2/3] Running comparative screen analysis ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/compare_experimental_vs_control.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/compare_experimental_vs_control.py" \
     --intron-exp  "${PrP_INTRON}" \
     --intron-ctrl "${CTRL_INTRON}" \
     --exon-exp    "${PrP_EXON}" \

@@ -7,17 +7,19 @@
 
 set -euo pipefail
 
+source /curc/sw/anaconda3/2023.09/etc/profile.d/conda.sh
+
 # ── Paths ──────────────────────────────────────────────────────────────────────
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/sub"
-PYTHON="ml miniforge && conda run -n hap1 python3"
+PYTHON="conda run -n hap1 python3"
 
-REF_DIR="/scratch/alpine/wist9668/reference/annotation"
+REF_DIR="/scratch/alpine/wist9668/haploid_scratch/reference/annotation"
 ASSEMBLY_REPORT="${REF_DIR}/GCA_000001405.15_GRCh38_assembly_report.txt"
 EXONS_NC="${REF_DIR}/exons.bed"
 EXONS_CM="${REF_DIR}/exons_CM_mapped.bed"
 
-DATA_DIR="/scratch/alpine/wist9668/data/analyzed_data/synthetic_lethal_screens"
+DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
 PrP_DIR="${DATA_DIR}/JS_HAP1_PrP_output/replicate_1"
 CTRL_DIR="${DATA_DIR}/JS_ControlData-HAP1_output/replicate_1"
 
@@ -38,7 +40,7 @@ RESULTS="${OUT_DIR}/PrP_vs_JScontrol_results.tsv"
 
 if [[ ! -f "${EXONS_CM}" ]]; then
     echo "[1/3] Creating exons_CM_mapped.bed ..."
-    ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/make_exons_CM_mapped.py" \
+    conda run -n hap1 python3 "${SCRIPT_DIR}/make_exons_CM_mapped.py" \
         "${ASSEMBLY_REPORT}" "${EXONS_NC}" "${EXONS_CM}"
 else
     echo "[1/3] exons_CM_mapped.bed already exists, skipping."
@@ -47,13 +49,13 @@ fi
 # ── Step 2: Count exonic insertions per gene ───────────────────────────────────
 
 echo "[2/3] Counting exonic insertions for PrP screen ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
     --bwt   "${PrP_BWT}" \
     --exons "${EXONS_CM}" \
     --out   "${PrP_EXON}"
 
 echo "[2/3] Counting exonic insertions for control ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
     --bwt   "${CTRL_BWT}" \
     --exons "${EXONS_CM}" \
     --out   "${CTRL_EXON}"
@@ -61,7 +63,7 @@ ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.p
 # ── Step 3: Run comparative Fisher test ───────────────────────────────────────
 
 echo "[3/3] Running comparative screen analysis ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/compare_experimental_vs_control.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/compare_experimental_vs_control.py" \
     --intron-exp  "${PrP_INTRON}" \
     --intron-ctrl "${CTRL_INTRON}" \
     --exon-exp    "${PrP_EXON}" \

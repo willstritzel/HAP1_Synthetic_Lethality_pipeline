@@ -9,14 +9,16 @@
 
 set -euo pipefail
 
+source /curc/sw/anaconda3/2023.09/etc/profile.d/conda.sh
+
 # ── Paths ──────────────────────────────────────────────────────────────────────
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/sub"
 
-REF_DIR="/scratch/alpine/wist9668/reference/annotation"
+REF_DIR="/scratch/alpine/wist9668/haploid_scratch/reference/annotation"
 EXONS_CM="${REF_DIR}/exons_CM_mapped.bed"
 
-DATA_DIR="/scratch/alpine/wist9668/data/analyzed_data/synthetic_lethal_screens"
+DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
 CD59_DIR="${DATA_DIR}/JS_HAP1_CD59_output/replicate_1"
 CTRL_DIR="${DATA_DIR}/JS_ControlData-HAP1_output/replicate_1"
 
@@ -49,13 +51,13 @@ echo "[1/3] exons_CM_mapped.bed already exists, skipping."
 # ── Step 2: Count exonic insertions per gene ───────────────────────────────────
 
 echo "[2/3] Counting exonic insertions for CD59 screen ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
     --bwt   "${CD59_BWT}" \
     --exons "${EXONS_CM}" \
     --out   "${CD59_EXON}"
 
 echo "[2/3] Counting exonic insertions for control ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.py" \
     --bwt   "${CTRL_BWT}" \
     --exons "${EXONS_CM}" \
     --out   "${CTRL_EXON}"
@@ -63,7 +65,7 @@ ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/count_exon_insertions.p
 # ── Step 3: Run comparative Fisher test ───────────────────────────────────────
 
 echo "[3/3] Running comparative screen analysis ..."
-ml miniforge && conda run -n hap1 python3 "${SCRIPT_DIR}/compare_experimental_vs_control.py" \
+conda run -n hap1 python3 "${SCRIPT_DIR}/compare_experimental_vs_control.py" \
     --intron-exp  "${CD59_INTRON}" \
     --intron-ctrl "${CTRL_INTRON}" \
     --exon-exp    "${CD59_EXON}" \

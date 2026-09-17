@@ -1,6 +1,7 @@
 #!/bin/bash
-#SBATCH --partition=amilan
-#SBATCH --qos=normal
+#SBATCH --account=ucb-general
+#SBATCH --partition=acpu
+#SBATCH --qos=cpu-normal
 #SBATCH --job-name=lncRNA_filt_hap1-4
 #SBATCH --output=logs/lncRNA_filt_hap1-4.%j.out
 #SBATCH --time=002:00:00
@@ -9,21 +10,20 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=wist9668@colorado.edu
 
-module purge
-module load miniforge
-mamba activate hap1
+source /curc/sw/anaconda3/2023.09/etc/profile.d/conda.sh
+conda activate hap1
 
 cd /projects/wist9668/HAP1_Synthetic_Lethality_pipeline
 
 # ── Job-specific settings ────────────────────────────────────────────────────
 SCREEN_NAME=lncRNA_filt_hap1-4
-GENE_REF=/scratch/alpine/wist9668/reference/annotation/lnc_RNA/lncRNA_introns_no_PC_overlap_CM.bed
+GENE_REF=/scratch/alpine/wist9668/haploid_scratch/reference/annotation/lnc_RNA/lncRNA_introns_no_PC_overlap_CM.bed
 REF_ID=lncRNA_noPC
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Clean up previous runs
-rm -rf /scratch/alpine/wist9668/tmp/${SCREEN_NAME}_output/
-rm -rf /scratch/alpine/wist9668/data/analyzed_data/synthetic_lethal_screens/${SCREEN_NAME}_output/
+rm -rf /scratch/alpine/wist9668/haploid_scratch/tmp/${SCREEN_NAME}_output/
+rm -rf /scratch/alpine/wist9668/haploid_scratch/screens/${SCREEN_NAME}_output/
 
 # Array of input files mapped to replicate numbers
 FILES=(
