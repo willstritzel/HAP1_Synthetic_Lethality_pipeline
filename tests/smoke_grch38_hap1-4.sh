@@ -20,7 +20,7 @@
 #
 # Submit:  sbatch tests/smoke_grch38_hap1-4.sh
 # Clean up afterwards (the test writes a real screen directory):
-#   rm -rf /scratch/alpine/wist9668/haploid_scratch/screens/smoke_grch38_hap1-4_output
+#   rm -rf /scratch/alpine/wist9668/haploid_scratch/outputs/smoke_grch38_hap1-4_output
 #   rm -rf /pl/active/ShenLab_PL/haploid_genetics/outputs/smoke_grch38_hap1-4_output
 #####################################################################
 

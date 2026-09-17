@@ -19,7 +19,7 @@ ASSEMBLY_REPORT="${REF_DIR}/GCA_000001405.15_GRCh38_assembly_report.txt"
 EXONS_NC="${REF_DIR}/exons.bed"
 EXONS_CM="${REF_DIR}/exons_CM_mapped.bed"
 
-DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
+DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/outputs"
 PrP_DIR="${DATA_DIR}/JS_HAP1_PrP_output/replicate_1"
 CTRL_DIR="${DATA_DIR}/JS_ControlData-HAP1_output/replicate_1"
 

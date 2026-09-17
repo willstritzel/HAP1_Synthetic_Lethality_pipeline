@@ -23,7 +23,7 @@ REF_ID=lncRNA_noPC
 
 # Clean up previous runs
 rm -rf /scratch/alpine/wist9668/haploid_scratch/tmp/${SCREEN_NAME}_output/
-rm -rf /scratch/alpine/wist9668/haploid_scratch/screens/${SCREEN_NAME}_output/
+rm -rf /scratch/alpine/wist9668/haploid_scratch/outputs/${SCREEN_NAME}_output/
 
 # Array of input files mapped to replicate numbers
 FILES=(

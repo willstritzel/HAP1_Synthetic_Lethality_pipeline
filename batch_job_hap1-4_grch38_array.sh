@@ -29,7 +29,7 @@
 # chains the archive job:
 #
 #   bash sub/submit_array.sh batch_job_hap1-4_grch38_array.sh \
-#        ControlData-HAP1 GRCh38-NCBI_RefSeq
+#        GRCh38_hap1-4 GRCh38-NCBI_RefSeq
 #####################################################################
 
 source /curc/sw/anaconda3/2023.09/etc/profile.d/conda.sh
@@ -38,7 +38,7 @@ conda activate hap1
 cd /projects/wist9668/HAP1_Synthetic_Lethality_pipeline
 
 # -- Job-specific settings ---------------------------------------------------
-SCREEN_NAME=ControlData-HAP1
+SCREEN_NAME=GRCh38_hap1-4
 GENE_REF=/pl/active/ShenLab_PL/haploid_genetics/reference/annotation/GRCh38_introns_CM_mapped.bed
 REF_ID=GRCh38-NCBI_RefSeq
 # ----------------------------------------------------------------------------

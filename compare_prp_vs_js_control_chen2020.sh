@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/sub"
 REF_DIR="/scratch/alpine/wist9668/haploid_scratch/reference/annotation/chen2020"
 EXONS_BED="${REF_DIR}/chen2020_exon_CM-mapped.bed"
 
-DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
+DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/outputs"
 PrP_DIR="${DATA_DIR}/JS_HAP1_PrP_chen2020_output/replicate_1"
 CTRL_DIR="${DATA_DIR}/JS_ControlData_chen2020_output/replicate_1"
 

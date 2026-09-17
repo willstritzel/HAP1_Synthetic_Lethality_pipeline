@@ -17,9 +17,12 @@
 #
 # This is the reference run of the pipeline - the sense/antisense
 # readout on real gene models, as opposed to the tiled-window null or
-# the chen2020 / lncRNA feature sets. The screen name ControlData-HAP1
-# matches the four HAP1_control_* entries in sub/analytical_settings.py
-# and the legacy archive at outputs/legacy/ControlData-HAP1_output.
+# the chen2020 / lncRNA feature sets.
+#
+# Output naming convention (adopted 2026-09-17): <annotation>_<reads>, so
+# this screen writes GRCh38_hap1-4_output. The equivalent run is archived
+# under the OLD convention at outputs/legacy/ControlData-HAP1_output --
+# same data, different name.
 #
 # -C (control-creation mode) is correct here and is not a workaround:
 # hap1-4 IS the unselected control dataset, so there is no control to
@@ -33,7 +36,7 @@ conda activate hap1
 cd /projects/wist9668/HAP1_Synthetic_Lethality_pipeline
 
 # ── Job-specific settings ────────────────────────────────────────────────────
-SCREEN_NAME=ControlData-HAP1
+SCREEN_NAME=GRCh38_hap1-4
 GENE_REF=/pl/active/ShenLab_PL/haploid_genetics/reference/annotation/GRCh38_introns_CM_mapped.bed
 REF_ID=GRCh38-NCBI_RefSeq
 # ─────────────────────────────────────────────────────────────────────────────

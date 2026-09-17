@@ -16,7 +16,7 @@ REF_DIR="/scratch/alpine/wist9668/haploid_scratch/reference/annotation/lnc_RNA"
 EXONS_BED="${REF_DIR}/chothani_lncRNA_exon_CM-mapped.bed"
 INTRONS_BED="${REF_DIR}/chothani_lncRNA_intron_real_CM-mapped.bed"
 
-DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
+DATA_DIR="/scratch/alpine/wist9668/haploid_scratch/outputs"
 PrP_DIR="${DATA_DIR}/JS_HAP1_PrP_lncRNA_output/replicate_1"
 CTRL_DIR="${DATA_DIR}/JS_ControlData_lncRNA_output/replicate_1"
 

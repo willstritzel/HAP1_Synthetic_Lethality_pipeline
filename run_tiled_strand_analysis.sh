@@ -39,8 +39,8 @@ set -euo pipefail
 
 # ── Defaults ─────────────────────────────────────────────────────────────────
 SCREEN_NAME="hap1-4_tiled"
-REP_DIR="/scratch/alpine/wist9668/haploid_scratch/screens/tiled_2kb_hap1-4_output"
-FINAL_DIR="/scratch/alpine/wist9668/haploid_scratch/screens"
+REP_DIR="/scratch/alpine/wist9668/haploid_scratch/outputs/tiled_2kb_hap1-4_output"
+FINAL_DIR="/scratch/alpine/wist9668/haploid_scratch/outputs"
 WINDOW_SIZE=10000
 STEP_SIZE=1000
 MIN_INSERTIONS=10
